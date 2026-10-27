@@ -34,6 +34,17 @@ brickNormalMap.repeat.set(10, 10);
 const fabricNormalMap = textureLoader.load('textures/fabric/quatrefoil_jacquard_fabric_nor_gl_4k.exr');
 const woodNormalMap = textureLoader.load('textures/wood/wooden_barrel_nor_gl_4k.exr');
 
+const stoneRoughnessMap = textureLoader.load('textures/stone/medieval_blocks_03_rough_4k.exr');
+stoneRoughnessMap.wrapS = THREE.RepeatWrapping;
+stoneRoughnessMap.wrapT = THREE.RepeatWrapping;
+stoneRoughnessMap.repeat.set(4, 4);
+const brickRoughnessMap = textureLoader.load('textures/brick/medieval_blocks_02_rough_4k.exr');
+brickRoughnessMap.wrapS = THREE.RepeatWrapping;
+brickRoughnessMap.wrapT = THREE.RepeatWrapping;
+brickRoughnessMap.repeat.set(10, 10);
+const fabricRoughMap = textureLoader.load('textures/fabric/quatrefoil_jacquard_fabric_rough_4k.exr');
+const woodRoughMap = textureLoader.load('textures/wood/wooden_barrel_rough_4k.exr');
+
 // ----------------------------------------------------
 // Scene
 // ----------------------------------------------------
@@ -80,7 +91,8 @@ const groundGeometry = new THREE.PlaneGeometry(100, 100);
 
 const groundMaterial = new THREE.MeshStandardMaterial({
     map: brickColorMap,
-    normalMap: brickNormalMap
+    normalMap: brickNormalMap,
+    roughnessMap: brickRoughnessMap
 });
 
 const ground = new THREE.Mesh(
@@ -98,23 +110,22 @@ scene.add(ground);
 // ----------------------------------------------------
 const cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
 
-const cubeMaterial = new THREE.MeshStandardMaterial({
-    color: 0x3366ff
-});
-
 const wallMaterial = new THREE.MeshStandardMaterial({
     map: stoneColorMap,
-    normalMap: stoneNormalMap
+    normalMap: stoneNormalMap,
+    roughnessMap: stoneRoughnessMap
 });
 
 const bannerMaterial = new THREE.MeshStandardMaterial({
     map: fabricColorMap,
-    normalMap: fabricNormalMap
+    normalMap: fabricNormalMap,
+    roughnessMap: fabricRoughMap
 })
 
 const woodMaterial = new THREE.MeshStandardMaterial({
     map: woodColorMap,
-    normalMap: woodNormalMap
+    normalMap: woodNormalMap,
+    roughnessMap: woodRoughMap
 })
 
 //Walls
@@ -206,6 +217,8 @@ const ambientLight = new THREE.AmbientLight(
     1
 );
 
+ambientLight.castShadow = true;
+
 scene.add(ambientLight);
 
 // ----------------------------------------------------
@@ -213,7 +226,7 @@ scene.add(ambientLight);
 // ----------------------------------------------------
 const directionalLight = new THREE.DirectionalLight(
     0xffffff,
-    2
+    1
 );
 
 directionalLight.position.set(20, 30, 10);
