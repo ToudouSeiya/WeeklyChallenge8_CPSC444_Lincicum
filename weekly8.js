@@ -20,6 +20,20 @@ const fabricColorMap = textureLoader.load('textures/fabric/quatrefoil_jacquard_f
 
 const woodColorMap = textureLoader.load('textures/wood/wooden_barrel_diff_4k.jpg');
 
+
+const stoneNormalMap = textureLoader.load('textures/stone/medieval_blocks_03_nor_gl_4k.exr');
+stoneNormalMap.wrapS = THREE.RepeatWrapping;
+stoneNormalMap.wrapT = THREE.RepeatWrapping;
+stoneNormalMap.repeat.set(4, 4);
+
+const brickNormalMap = textureLoader.load('textures/brick/medieval_blocks_02_nor_gl_4k.exr');
+brickNormalMap.wrapS = THREE.RepeatWrapping;
+brickNormalMap.wrapT = THREE.RepeatWrapping;
+brickNormalMap.repeat.set(10, 10);
+
+const fabricNormalMap = textureLoader.load('textures/fabric/quatrefoil_jacquard_fabric_nor_gl_4k.exr');
+const woodNormalMap = textureLoader.load('textures/wood/wooden_barrel_nor_gl_4k.exr');
+
 // ----------------------------------------------------
 // Scene
 // ----------------------------------------------------
@@ -65,7 +79,8 @@ controls.dampingFactor = 0.05;
 const groundGeometry = new THREE.PlaneGeometry(100, 100);
 
 const groundMaterial = new THREE.MeshStandardMaterial({
-    map: brickColorMap
+    map: brickColorMap,
+    normalMap: brickNormalMap
 });
 
 const ground = new THREE.Mesh(
@@ -88,15 +103,18 @@ const cubeMaterial = new THREE.MeshStandardMaterial({
 });
 
 const wallMaterial = new THREE.MeshStandardMaterial({
-    map: stoneColorMap
+    map: stoneColorMap,
+    normalMap: stoneNormalMap
 });
 
 const bannerMaterial = new THREE.MeshStandardMaterial({
-    map: fabricColorMap
+    map: fabricColorMap,
+    normalMap: fabricNormalMap
 })
 
 const woodMaterial = new THREE.MeshStandardMaterial({
-    map: woodColorMap
+    map: woodColorMap,
+    normalMap: woodNormalMap
 })
 
 //Walls
