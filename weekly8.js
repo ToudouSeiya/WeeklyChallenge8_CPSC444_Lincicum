@@ -1,6 +1,13 @@
+//Morgan Lincicum
+//Weekly Challenge 8 - Medieval Courtyard
+//10/27/26
+
 import * as THREE from 'three';
 
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+//Texture Loader + Textures
+const textureLoader = new THREE.TextureLoader();
 
 // ----------------------------------------------------
 // Scene
@@ -61,7 +68,7 @@ ground.receiveShadow = true;
 scene.add(ground);
 
 // ----------------------------------------------------
-// Example Cube
+// Objects
 // ----------------------------------------------------
 const cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
 
@@ -69,15 +76,86 @@ const cubeMaterial = new THREE.MeshStandardMaterial({
     color: 0x3366ff
 });
 
-const cube = new THREE.Mesh(
-    cubeGeometry,
-    cubeMaterial
-);
+//Walls
+const leftWall = new THREE.Mesh(cubeGeometry, cubeMaterial);
+leftWall.scale.set(1, 6, 8);
+leftWall.position.set(-20, 2, 8);
+leftWall.castShadow = true;
+scene.add(leftWall);
 
-cube.position.y = 2;
-cube.castShadow = true;
+const leftBackWall = new THREE.Mesh(cubeGeometry, cubeMaterial);
+leftBackWall.scale.set(1, 6, 3);
+leftBackWall.rotation.y = Math.PI / 2;
+leftBackWall.position.set(-12, 2, -8);
+leftBackWall.castShadow = true;
+scene.add(leftBackWall);
 
-scene.add(cube);
+const rightWall = new THREE.Mesh(cubeGeometry, cubeMaterial);
+rightWall.scale.set(1, 6, 8);
+rightWall.position.set(20, 2, 8);
+rightWall.castShadow = true;
+scene.add(rightWall);
+
+const rightBackWall = new THREE.Mesh(cubeGeometry, cubeMaterial);
+rightBackWall.scale.set(1, 6, 3);
+rightBackWall.rotation.y = Math.PI / 2;
+rightBackWall.position.set(12, 2, -8);
+rightBackWall.castShadow = true;
+scene.add(rightBackWall);
+
+//Gate
+const gate = new THREE.Mesh(cubeGeometry, cubeMaterial);
+gate.scale.set(1, 4, 4);
+gate.rotation.y = Math.PI / 2;
+gate.position.set(0, 2, -8);
+gate.castShadow = true;
+scene.add(gate);
+
+//Banners
+const banner = new THREE.Mesh(cubeGeometry, cubeMaterial);
+banner.scale.set(0.5, 2, 1);
+banner.rotation.y = Math.PI / 2;
+banner.position.set(-12, 8, -6);
+banner.castShadow = true;
+scene.add(banner);
+
+const banner2 = new THREE.Mesh(cubeGeometry, cubeMaterial);
+banner2.scale.set(0.5, 2, 1);
+banner2.rotation.y = Math.PI / 2;
+banner2.position.set(12, 8, -6);
+banner2.castShadow = true;
+scene.add(banner2);
+
+//crates
+const crate1 = new THREE.Mesh(cubeGeometry, cubeMaterial);
+crate1.scale.set(0.5, 0.5, 0.5);
+crate1.position.set(-5, 1, -5);
+crate1.castShadow = true;
+scene.add(crate1);
+
+const crate2 = new THREE.Mesh(cubeGeometry, cubeMaterial);
+crate2.scale.set(1, 1, 1);
+crate2.position.set(-8, 2, -4);
+crate2.castShadow = true;
+scene.add(crate2);
+
+const crate3 = new THREE.Mesh(cubeGeometry, cubeMaterial);
+crate3.scale.set(0.5, 0.5, 0.5);
+crate3.position.set(-8, 1, 0);
+crate3.castShadow = true;
+scene.add(crate3);
+
+const crate4 = new THREE.Mesh(cubeGeometry, cubeMaterial);
+crate4.scale.set(0.5, 0.5, 0.5);
+crate4.position.set(-9, 5, -5);
+crate4.castShadow = true;
+scene.add(crate4);
+
+const crate5 = new THREE.Mesh(cubeGeometry, cubeMaterial);
+crate5.scale.set(0.5, 0.5, 0.5);
+crate5.position.set(8, 1, -4);
+crate5.castShadow = true;
+scene.add(crate5);
 
 // ----------------------------------------------------
 // Ambient Light
@@ -140,7 +218,7 @@ function animate() {
 
     requestAnimationFrame(animate);
 
-    cube.rotation.y += 0.01;
+    //cube.rotation.y += 0.01;
 
     controls.update();
 
