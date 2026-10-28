@@ -7,6 +7,23 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 //Texture Loader + Textures
+
+//Wood Gate + Crates: 
+// Wooden Barrel
+// Poly Haven
+// https://polyhaven.com/a/wooden_barrel
+//Stone Wall: 
+// Medieval Blocks 03
+// Poly Haven
+// https://polyhaven.com/a/medieval_blocks_03
+//Brick Floor: 
+// Medieval Blocks 02
+// Poly Haven
+// https://polyhaven.com/a/medieval_blocks_02
+//Fabric: 
+// Quatrefoil Jacquard Fabric
+// Poly Haven
+// https://polyhaven.com/a/quatrefoil_jacquard_fabric
 const textureLoader = new THREE.TextureLoader();
 const stoneColorMap = textureLoader.load('textures/stone/medieval_blocks_03_diff_4k.jpg');
 stoneColorMap.wrapS = THREE.RepeatWrapping;
@@ -17,6 +34,9 @@ brickColorMap.wrapS = THREE.RepeatWrapping;
 brickColorMap.wrapT = THREE.RepeatWrapping;
 brickColorMap.repeat.set(10, 10);
 const fabricColorMap = textureLoader.load('textures/fabric/quatrefoil_jacquard_fabric_diff_4k.jpg');
+fabricColorMap.wrapS = THREE.RepeatWrapping;
+fabricColorMap.wrapT = THREE.RepeatWrapping;
+fabricColorMap.repeat.set(0.125, 0.125);
 
 const woodColorMap = textureLoader.load('textures/wood/wooden_barrel_diff_4k.jpg');
 
@@ -32,18 +52,26 @@ brickNormalMap.wrapT = THREE.RepeatWrapping;
 brickNormalMap.repeat.set(10, 10);
 
 const fabricNormalMap = textureLoader.load('textures/fabric/quatrefoil_jacquard_fabric_nor_gl_4k.exr');
+fabricNormalMap.wrapS = THREE.RepeatWrapping;
+fabricNormalMap.wrapT = THREE.RepeatWrapping;
+fabricNormalMap.repeat.set(0.125, 0.125);
 const woodNormalMap = textureLoader.load('textures/wood/wooden_barrel_nor_gl_4k.exr');
 
-const stoneRoughnessMap = textureLoader.load('textures/stone/medieval_blocks_03_rough_4k.exr');
+const stoneRoughnessMap = textureLoader.load('textures/stone/rough.png');
 stoneRoughnessMap.wrapS = THREE.RepeatWrapping;
 stoneRoughnessMap.wrapT = THREE.RepeatWrapping;
 stoneRoughnessMap.repeat.set(4, 4);
-const brickRoughnessMap = textureLoader.load('textures/brick/medieval_blocks_02_rough_4k.exr');
+const brickRoughnessMap = textureLoader.load('textures/brick/medieval_blocks_02_rough_4k.jpg');
 brickRoughnessMap.wrapS = THREE.RepeatWrapping;
 brickRoughnessMap.wrapT = THREE.RepeatWrapping;
 brickRoughnessMap.repeat.set(10, 10);
-const fabricRoughMap = textureLoader.load('textures/fabric/quatrefoil_jacquard_fabric_rough_4k.exr');
-const woodRoughMap = textureLoader.load('textures/wood/wooden_barrel_rough_4k.exr');
+const fabricRoughMap = textureLoader.load('textures/fabric/quatrefoil_jacquard_fabric_rough_2k.png');
+fabricRoughMap.wrapS = THREE.RepeatWrapping;
+fabricRoughMap.wrapT = THREE.RepeatWrapping;
+fabricRoughMap.repeat.set(0.125, 0.125);
+const woodRoughMap = textureLoader.load('textures/wood/wooden_barrel_rough_2k.png');
+
+const fabricAOMap = textureLoader.load('textures/fabric/fabricAO.png');
 
 // ----------------------------------------------------
 // Scene
@@ -119,7 +147,8 @@ const wallMaterial = new THREE.MeshStandardMaterial({
 const bannerMaterial = new THREE.MeshStandardMaterial({
     map: fabricColorMap,
     normalMap: fabricNormalMap,
-    roughnessMap: fabricRoughMap
+    roughnessMap: fabricRoughMap,
+    aoMap: fabricAOMap
 })
 
 const woodMaterial = new THREE.MeshStandardMaterial({
@@ -214,10 +243,9 @@ scene.add(crate5);
 // ----------------------------------------------------
 const ambientLight = new THREE.AmbientLight(
     0xffffff,
-    1
+    0.5
 );
 
-ambientLight.castShadow = true;
 
 scene.add(ambientLight);
 
@@ -233,6 +261,16 @@ directionalLight.position.set(20, 30, 10);
 directionalLight.castShadow = true;
 
 scene.add(directionalLight);
+
+const pointLight = new THREE.PointLight(
+    0xffffff,
+    50
+);
+
+pointLight.position.set(0, 5, 0);
+pointLight.castShadow = true;
+
+scene.add(pointLight);
 
 // ----------------------------------------------------
 // Toggle Lights
